@@ -5,8 +5,11 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/myprofileweb_beta' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/myprofileweb_beta/' : '',
+  // Only add basePath when specifically building for GitHub Pages
+  ...(process.env.GITHUB_PAGES && {
+    basePath: '/myprofileweb_beta',
+    assetPrefix: '/myprofileweb_beta/',
+  }),
 };
 
 export default nextConfig;
