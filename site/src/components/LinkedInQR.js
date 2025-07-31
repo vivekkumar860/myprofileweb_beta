@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 export default function LinkedInQR() {
   const [copied, setCopied] = useState(false);
 
-  const linkedInUrl = 'https://www.linkedin.com/in/vivekk860/';
+  const linkedInUrl = 'https://www.linkedin.com/in/vivekkumar860/';
 
   const copyUrl = () => {
     navigator.clipboard.writeText(linkedInUrl);

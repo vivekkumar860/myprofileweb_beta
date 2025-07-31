@@ -47,8 +47,8 @@ export default function AdminDashboard() {
         "Open to Collaborations"
       ],
       location: "Phagwara, Punjab",
-      linkedinUrl: "https://www.linkedin.com/in/vivekk860/",
-      email: "vivek@example.com",
+      linkedinUrl: "https://www.linkedin.com/in/vivekkumar860/",
+      email: "trainedvk1@gmail.com",
       phone: "+91-XXXXXXXXXX",
       profileImage: "/profile.jpg"
     },
@@ -408,7 +408,7 @@ export default function AdminDashboard() {
                   type="email"
                   value={siteData.profile.email}
                   onChange={(e) => updateField('profile', 'email', e.target.value)}
-                  placeholder="your.email@example.com"
+                  placeholder="trainedvk1@gmail.com"
                 />
                 
                 <InputField

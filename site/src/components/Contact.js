@@ -75,7 +75,7 @@ export default function EnhancedContact() {
   };
 
   const copyLinkedInUrl = () => {
-    navigator.clipboard.writeText('https://www.linkedin.com/in/vivekk860/');
+    navigator.clipboard.writeText('https://www.linkedin.com/in/vivekkumar860/');
     toast.success('LinkedIn URL copied to clipboard!');
   };
 
@@ -88,16 +88,16 @@ export default function EnhancedContact() {
     {
       icon: <Mail className="w-6 h-6" />,
       title: 'Email',
-      value: 'vivek@example.com',
-      link: 'mailto:vivek@example.com',
+      value: 'trainedvk1@gmail.com',
+      link: 'mailto:trainedvk1@gmail.com',
       description: 'Send me an email anytime',
       color: 'from-blue-500 to-blue-600'
     },
     {
       icon: <ExternalLink className="w-6 h-6" />,
       title: 'LinkedIn',
-      value: '/in/vivekk860',
-      link: 'https://www.linkedin.com/in/vivekk860/',
+      value: '/in/vivekkumar860',
+      link: 'https://www.linkedin.com/in/vivekkumar860/',
       description: 'Connect professionally',
       color: 'from-blue-600 to-blue-700',
       copyAction: copyLinkedInUrl
@@ -204,7 +204,7 @@ export default function EnhancedContact() {
                       className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 ${
                         errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
                       }`}
-                      placeholder="your.email@example.com"
+                      placeholder="trainedvk1@gmail.com"
                     />
                     {errors.email && (
                       <motion.p
