@@ -1,0 +1,136 @@
+{
+  "bio": "Based in Phagwara, Punjab, I'm passionate about connecting talent with opportunity and building my skills at the intersection of technology and HR. Currently supporting end-to-end hiring at Placify.ai, I bring experience in job posting, candidate screening, and onboarding. I'm pursuing a B.Tech. in Computer Science & Engineering (AI & ML) at Lovely Professional University, and I'm active in the Coding and Anime Clubs. Certified in computer networking, web design, and more. thank you",
+  "highlights": [
+    {
+      "icon": "💻",
+      "title": "Programming Skills",
+      "desc": "Java, JavaScript, Python, C/C++\nHTML, Responsive Web Design",
+      "border": "border-blue-600"
+    },
+    {
+      "icon": "🌐",
+      "title": "Networking & Cloud",
+      "desc": "Computer Networking, Network Security, Cloud Computing",
+      "border": "border-green-500"
+    },
+    {
+      "icon": "📊",
+      "title": "Data & Visualization",
+      "desc": "Pandas, Seaborn, Data Analysis, Data Visualization",
+      "border": "border-yellow-500"
+    },
+    {
+      "icon": "🎓",
+      "title": "Certifications",
+      "desc": "TCP/IP & Advanced Topics (Dec 2024)\nPacket Switching Networks (Nov 2024)\nGoogle Networking (Sep 2024)\nResponsive Web Design (Dec 2023)",
+      "border": "border-purple-500"
+    },
+    {
+      "icon": "🤝",
+      "title": "HR & Recruiting",
+      "desc": "Talent Acquisition, Technical Recruiting, AI for Recruiting, Active Sourcing",
+      "border": "border-pink-500"
+    },
+    {
+      "icon": "👾",
+      "title": "Talents & Interests",
+      "desc": "Coding Club, Anime Club, Lifelong Learning",
+      "border": "border-indigo-500"
+    }
+  ],
+  "profile": {
+    "name": "Vivek Kumar",
+    "titles": [
+      "Talent Acquisition Coordinator",
+      "B.Tech. CSE (AI & ML) Student",
+      "Full Stack Enthusiast",
+      "Open to Collaborations"
+    ],
+    "location": "Phagwara, Punjab",
+    "linkedinUrl": "https://www.linkedin.com/in/vivekkumar860/",
+    "email": "trainedvk1@gmail.com",
+    "phone": "+91-XXXXXXXXXX",
+    "profileImage": "/profile.jpg"
+  },
+  "skills": {
+    "technical": [
+      "Java",
+      "JavaScript",
+      "Python",
+      "C/C++",
+      "HTML",
+      "CSS"
+    ],
+    "tools": [
+      "React",
+      "Node.js",
+      "Git",
+      "VS Code",
+      "Figma"
+    ],
+    "databases": [
+      "MySQL",
+      "MongoDB",
+      "PostgreSQL"
+    ],
+    "cloud": [
+      "AWS",
+      "Google Cloud",
+      "Azure"
+    ]
+  },
+  "experience": [
+    {
+      "id": 1,
+      "company": "Placify.ai",
+      "position": "Talent Acquisition Coordinator",
+      "duration": "2024 - Present",
+      "description": "Supporting end-to-end hiring processes including job posting, candidate screening, and onboarding.",
+      "achievements": [
+        "Streamlined hiring process",
+        "Improved candidate experience"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": 1,
+      "institution": "Lovely Professional University",
+      "degree": "B.Tech. Computer Science & Engineering (AI & ML)",
+      "duration": "2022 - 2026",
+      "cgpa": "8.5/10",
+      "activities": [
+        "Coding Club",
+        "Anime Club"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "id": 1,
+      "name": "TCP/IP & Advanced Topics",
+      "issuer": "Coursera",
+      "date": "Dec 2024",
+      "credentialId": "ABC123"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Portfolio Website",
+      "description": "Personal portfolio built with Next.js and Tailwind CSS",
+      "technologies": [
+        "Next.js",
+        "React",
+        "Tailwind CSS"
+      ],
+      "githubUrl": "https://github.com/username/portfolio",
+      "liveUrl": "https://portfolio.com",
+      "features": [
+        "Responsive design",
+        "Admin dashboard",
+        "Dynamic content"
+      ]
+    }
+  ]
+}

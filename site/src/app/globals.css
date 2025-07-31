@@ -3,24 +3,203 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Remove dark mode auto-detection that might cause text visibility issues */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+} */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Force text visibility for all elements */
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label {
+  color: inherit;
+}
+
+/* Ensure input and textarea visibility */
+input, textarea, select {
+  background: white;
+  color: #171717 !important;
+  border: 1px solid #d1d5db;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+/* Ensure form elements are visible */
+.form-input, .form-textarea, .form-select {
+  background: white !important;
+  color: #171717 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+/* Ensure placeholder text is visible */
+input::placeholder, textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+
+/* Ensure option elements are visible */
+option {
+  background: white;
+  color: #171717;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+/* Navigation specific styles */
+.nav-hide {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-show {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Ensure proper spacing for mobile viewports */
+@media (max-width: 768px) {
+  .mobile-safe-top {
+    padding-top: 5rem;
+  }
+  
+  /* Prevent navigation overlap on mobile */
+  .navigation-safe-spacing {
+    margin-top: 4rem;
+  }
+}
+
+/* Smooth transitions for navigation visibility */
+.nav-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Enhanced Navigation Hover Effects */
+.nav-link-gradient {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.nav-underline {
+  position: relative;
+}
+
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transition: width 0.3s ease-out;
+}
+
+.nav-underline:hover::after {
+  width: 100%;
+}
+
+/* Ensure proper gradient text rendering */
+.gradient-text-hover:hover {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Smooth text color transitions */
+.text-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }

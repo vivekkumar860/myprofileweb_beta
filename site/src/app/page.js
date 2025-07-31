@@ -1,16 +1,28 @@
 
-import Homepage from "../components/Homepage";
+import Navigation from "../components/Navigation";
+import EnhancedHomepage from "../components/EnhancedHomepage";
 import About from "../components/About";
-import Skills from "../components/Skills";
-import Portfolio from "../components/Portfolio";
+import EnhancedSkills from "../components/EnhancedSkills";
+import EnhancedWorkShowcase from "../components/EnhancedWorkShowcase";
+import Certificates from "../components/Certificates";
+import Achievements from "../components/Achievements";
+import EnhancedContact from "../components/Contact";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <main>
-      <Homepage />
-      <About />
-      <Skills />
-      <Portfolio />
-    </main>
+    <>
+      <Navigation />
+      <main>
+        <EnhancedHomepage />
+        <About />
+        <EnhancedSkills />
+        <EnhancedWorkShowcase />
+        <Certificates />
+        <Achievements />
+        <EnhancedContact />
+      </main>
+      <Footer />
+    </>
   );
 }
