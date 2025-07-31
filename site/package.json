@@ -8,6 +8,7 @@
     "build": "next build",
     "export": "next build && next export",
     "deploy": "npm run build && touch out/.nojekyll",
+    "gh-deploy": "npm run build && touch out/.nojekyll && gh-pages -d out -r https://github.com/vivekkumar860/myprofileweb_beta.git",
     "start": "next start",
     "lint": "next lint"
   },
@@ -27,6 +28,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
+    "gh-pages": "^6.3.0",
     "tailwindcss": "^4"
   }
 }
