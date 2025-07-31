@@ -1,6 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 Vivek Kumar - Enhanced Portfolio Website (Beta)
 
-## Getting Started
+A modern, responsive portfolio website built with **Next.js 15** and **React 18**, featuring sophisticated animations, smart navigation, and professional design.
+
+## ✨ Features
+
+### 🎨 **Modern UI/UX**
+- **Smart Navigation**: Auto-hide on scroll down, appears on scroll up
+- **Sophisticated Hover Effects**: Inspired by Stripe, Linear, Apple, and Vercel
+- **Glassmorphism Design**: Modern backdrop blur effects with gradients
+- **Professional Animations**: Smooth Framer Motion transitions
+- **Mobile-First Responsive**: Optimized for all devices
+
+### 📱 **Enhanced Sections**
+- **Hero Section**: Dynamic typewriter effect with animated profile
+- **About**: Professional introduction with enhanced styling
+- **Skills**: Interactive skill showcase with statistics
+- **Portfolio**: Project showcase with loading states and hover effects
+- **Certificates**: Professional credentials display
+- **Achievements**: Timeline-style accomplishments
+- **Contact**: Validated contact form with modern styling
+
+## 🚀 **Getting Started**
 
 First, run the development server:
 
