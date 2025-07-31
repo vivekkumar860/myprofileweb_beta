@@ -22,6 +22,8 @@ A modern, responsive portfolio website built with **Next.js 15** and **React 18*
 
 ## 🚀 **Getting Started**
 
+### **Local Development**
+
 First, run the development server:
 
 ```bash
@@ -36,21 +38,102 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### **Building for Production**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To build the application for production:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+This will create an optimized production build with static export.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **GitHub Pages Deployment**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is configured for automatic deployment to GitHub Pages:
 
-## Deploy on Vercel
+1. **Automatic Deployment**: Push to the `main` branch triggers auto-deployment
+2. **GitHub Actions**: Uses workflow in `.github/workflows/deploy.yml`
+3. **Static Export**: Next.js builds to static files in the `out` directory
+4. **Live URL**: Available at `https://vivekkumar860.github.io/myprofileweb_beta/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### **Manual GitHub Pages Setup**
+1. Go to your repository **Settings** → **Pages**
+2. Select **Deploy from a branch**
+3. Choose **gh-pages** branch
+4. Click **Save**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### **Local Static Build**
+```bash
+npm run deploy
+```
+
+## 🌐 **Deployment Options**
+
+### **Option 1: GitHub Pages (Free)**
+- ✅ **Automatic**: Push triggers deployment
+- ✅ **Free hosting** for public repositories
+- ✅ **Custom domain** support available
+- ✅ **HTTPS** enabled by default
+- 🔗 **Live at**: `https://vivekkumar860.github.io/myprofileweb_beta/`
+
+### **Option 2: Vercel (Recommended for Dynamic Features)**
+
+### **Option 2: Vercel (Recommended for Dynamic Features)**
+1. Go to [vercel.com](https://vercel.com)
+2. Click "New Project"
+3. Import from GitHub: `vivekkumar860/myprofileweb_beta`
+4. Deploy automatically ⚡
+
+### **Option 3: Netlify**
+1. Go to [netlify.com](https://netlify.com)
+2. Click "Add new site"
+3. Connect to GitHub and select your repository
+4. Deploy with default settings 🚀
+
+## 📁 **Project Structure**
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── admin/             # Admin panel for content management
+│   ├── api/               # API routes (disabled for static export)
+│   ├── globals.css        # Global styles
+│   ├── layout.js          # Root layout
+│   └── page.js            # Home page
+├── components/            # React components
+│   ├── Navigation.js      # Smart navigation with hover effects
+│   ├── EnhancedHomepage.js # Hero section with animations
+│   ├── About.js           # About section
+│   ├── EnhancedSkills.js  # Skills showcase
+│   ├── EnhancedWorkShowcase.js # Project portfolio
+│   ├── Certificates.js    # Professional credentials
+│   ├── Achievements.js    # Career highlights
+│   ├── Contact.js         # Contact form
+│   └── Footer.js          # Site footer
+.github/
+└── workflows/
+    └── deploy.yml         # GitHub Actions deployment
+public/                    # Static assets
+├── profile.jpg           # Profile image
+├── project*.jpg          # Project screenshots
+└── siteContent.json      # Site content data
+out/                       # Generated static files (after build)
+```
+
+## ⚙️ **GitHub Pages Configuration**
+
+The project includes specific configurations for GitHub Pages:
+
+- **Static Export**: `output: 'export'` in `next.config.mjs`
+- **Base Path**: Configured for repository name `/myprofileweb_beta`
+- **Image Optimization**: Disabled for static compatibility
+- **Trailing Slashes**: Enabled for proper routing
+- **GitHub Actions**: Automated deployment workflow
+
+### **Technical Notes for GitHub Pages**
+- ⚠️ **API Routes**: Disabled (server-side features not supported)
+- ✅ **Static Content**: All content from `siteContent.json`
+- ✅ **Client-side Routing**: Works with trailing slashes
+- ✅ **Images**: Unoptimized but functional
+- ✅ **Animations**: Full Framer Motion support maintained

@@ -214,6 +214,14 @@ export default function AdminDashboard() {
     setSaving(true);
     setMessage("");
     
+    // Note: API routes are not available in static export (GitHub Pages)
+    // This functionality is disabled for static deployments
+    if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
+      setMessage("⚠️ Save functionality is not available in GitHub Pages deployment. Edit siteContent.json directly and redeploy.");
+      setSaving(false);
+      return;
+    }
+    
     // Validate inputs
     if (!siteData.bio.trim()) {
       setMessage("❌ Bio cannot be empty");
