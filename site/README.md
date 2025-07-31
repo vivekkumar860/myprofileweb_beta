@@ -50,22 +50,25 @@ This will create an optimized production build with static export.
 
 ### **GitHub Pages Deployment**
 
-This project is configured for automatic deployment to GitHub Pages:
+This project is configured for deployment to GitHub Pages:
 
-1. **Automatic Deployment**: Push to the `main` branch triggers auto-deployment
-2. **GitHub Actions**: Uses workflow in `.github/workflows/deploy.yml`
+1. **Manual Deployment**: Use `npm run gh-deploy` to deploy directly
+2. **GitHub Actions**: Uses workflow in `.github/workflows/deploy.yml` (backup option)
 3. **Static Export**: Next.js builds to static files in the `out` directory
 4. **Live URL**: Available at `https://vivekkumar860.github.io/myprofileweb_beta/`
 
-#### **Manual GitHub Pages Setup**
+#### **✅ GitHub Pages Setup (COMPLETED)**
+The `gh-pages` branch has been created and your site is ready! 
+
+**To configure GitHub Pages:**
 1. Go to your repository **Settings** → **Pages**
 2. Select **Deploy from a branch**
 3. Choose **gh-pages** branch
 4. Click **Save**
 
-#### **Local Static Build**
+#### **Manual Deployment**
 ```bash
-npm run deploy
+npm run gh-deploy
 ```
 
 ## 🌐 **Deployment Options**
