@@ -1,0 +1,144 @@
+{
+  "profile": {
+    "name": "Vivek Kumar",
+    "linkedin": "https://www.linkedin.com/in/vivekk860/",
+    "github": "https://github.com/vivekkumar860",
+    "email": "vivekk860@gmail.com"
+  },
+  "bio": "Based in Phagwara, Punjab, I'm passionate about connecting talent with opportunity and building my skills at the intersection of technology and HR. Currently supporting end-to-end hiring at Placify.ai, I bring experience in job posting, candidate screening, and onboarding. I'm pursuing a B.Tech. in Computer Science & Engineering (AI & ML) at Lovely Professional University, and I'm active in the Coding and Anime Clubs. Certified in computer networking, web design, and more. thank you",
+  "projects": [
+    {
+      "id": 1,
+      "title": "Placify.ai Recruitment Platform",
+      "description": "End-to-end hiring platform with job posting, candidate screening, and onboarding features. Currently supporting talent acquisition operations.",
+      "technologies": ["React", "Node.js", "MongoDB", "JavaScript", "HR Tech", "Recruitment"],
+      "status": "live",
+      "image": "/project1.jpg",
+      "demoUrl": "https://placify.ai",
+      "githubUrl": "https://github.com/vivekkumar860",
+      "year": "2024",
+      "client": "Placify.ai"
+    },
+    {
+      "id": 2,
+      "title": "Portfolio Website",
+      "description": "Modern, responsive portfolio website built with Next.js featuring advanced animations and professional design.",
+      "technologies": ["Next.js", "React", "Tailwind CSS", "Framer Motion", "JavaScript"],
+      "status": "live",
+      "image": "/project2.jpg",
+      "demoUrl": "https://vivekkumar860.github.io/myProfileWeb",
+      "githubUrl": "https://github.com/vivekkumar860/myProfileWeb",
+      "year": "2024",
+      "client": "Personal Project"
+    },
+    {
+      "id": 3,
+      "title": "Network Security Projects",
+      "description": "Collection of computer networking and security projects showcasing TCP/IP, packet switching, and network analysis skills.",
+      "technologies": ["Python", "Networking", "Security", "TCP/IP", "Packet Analysis"],
+      "status": "coming-soon",
+      "image": "/project3.jpg",
+      "year": "2024",
+      "client": "Academic Projects"
+    }
+  ],
+  "statistics": {
+    "experience": "2+",
+    "projects": "10+",
+    "clients": "5+"
+  },
+  "certificates": [
+    {
+      "id": 1,
+      "title": "TCP/IP & Advanced Topics",
+      "issuer": "Cisco Networking Academy",
+      "date": "Dec 2024",
+      "image": "/cert1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Packet Switching Networks",
+      "issuer": "Cisco Networking Academy", 
+      "date": "Nov 2024",
+      "image": "/cert2.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Google Networking",
+      "issuer": "Google Cloud",
+      "date": "Sep 2024",
+      "image": "/cert3.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Responsive Web Design",
+      "issuer": "freeCodeCamp",
+      "date": "Dec 2023",
+      "image": "/cert4.jpg"
+    }
+  ],
+  "achievements": [
+    {
+      "id": 1,
+      "title": "Top Performer at Placify.ai",
+      "description": "Recognized for outstanding contribution to recruitment operations and talent acquisition excellence.",
+      "year": "2024"
+    },
+    {
+      "id": 2,
+      "title": "Coding Club Leadership",
+      "description": "Active leader in university coding club, organizing workshops and technical events for fellow students.",
+      "year": "2024"
+    },
+    {
+      "id": 3,
+      "title": "Multiple Networking Certifications",
+      "description": "Achieved multiple industry-recognized certifications in computer networking and security within one year.",
+      "year": "2024"
+    },
+    {
+      "id": 4,
+      "title": "Web Development Excellence",
+      "description": "Developed multiple high-quality web projects demonstrating expertise in modern frameworks and technologies.",
+      "year": "2023-2024"
+    }
+  ],
+  "highlights": [
+    {
+      "icon": "💻",
+      "title": "Programming Skills",
+      "desc": "Java, JavaScript, Python, C/C++\nHTML, Responsive Web Design",
+      "border": "border-blue-600"
+    },
+    {
+      "icon": "🌐",
+      "title": "Networking & Cloud",
+      "desc": "Computer Networking, Network Security, Cloud Computing",
+      "border": "border-green-500"
+    },
+    {
+      "icon": "📊",
+      "title": "Data & Visualization",
+      "desc": "Pandas, Seaborn, Data Analysis, Data Visualization",
+      "border": "border-yellow-500"
+    },
+    {
+      "icon": "🎓",
+      "title": "Certifications",
+      "desc": "TCP/IP & Advanced Topics (Dec 2024)\nPacket Switching Networks (Nov 2024)\nGoogle Networking (Sep 2024)\nResponsive Web Design (Dec 2023)",
+      "border": "border-purple-500"
+    },
+    {
+      "icon": "🤝",
+      "title": "HR & Recruiting",
+      "desc": "Talent Acquisition, Technical Recruiting, AI for Recruiting, Active Sourcing",
+      "border": "border-pink-500"
+    },
+    {
+      "icon": "👾",
+      "title": "Talents & Interests",
+      "desc": "Coding Club, Anime Club, Lifelong Learning",
+      "border": "border-indigo-500"
+    }
+  ]
+}
