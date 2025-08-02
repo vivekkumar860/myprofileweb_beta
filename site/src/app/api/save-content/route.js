@@ -18,18 +18,18 @@ export async function POST(request) {
       }
     }
 
-    // For backward compatibility, we'll save the basic structure to siteContent.json
-    // and the full expanded data to a new file
-    const basicContent = {
-      bio: data.bio,
-      highlights: data.highlights
-    };
+    // Save the complete data structure to both files for consistency
+    const filePaths = [
+      path.join(process.cwd(), 'siteContent.json'),
+      path.join(process.cwd(), 'public', 'siteContent.json')
+    ];
 
-    // Save basic content for existing homepage compatibility
-    const basicFilePath = path.join(process.cwd(), 'siteContent.json');
-    fs.writeFileSync(basicFilePath, JSON.stringify(basicContent, null, 2));
+    // Save to both locations to maintain consistency
+    for (const filePath of filePaths) {
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    }
 
-    // Save full data structure for future use
+    // Also save full data structure for future use
     const fullFilePath = path.join(process.cwd(), 'fullSiteData.json');
     fs.writeFileSync(fullFilePath, JSON.stringify(data, null, 2));
     

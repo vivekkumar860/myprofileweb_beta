@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import siteContent from "../../../siteContent.json";
 
 // Note: For production, this should be handled server-side with proper authentication
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
@@ -28,6 +27,7 @@ const BORDER_OPTIONS = [
 ];
 
 export default function AdminDashboard() {
+  const [siteContent, setSiteContent] = useState(null);
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -100,14 +100,30 @@ export default function AdminDashboard() {
     ]
   });
 
+  // Load site content on component mount
   useEffect(() => {
-    // Initialize with existing content
-    setSiteData(prev => ({
-      ...prev,
-      bio: siteContent.bio || "",
-      highlights: siteContent.highlights || []
-    }));
+    const fetchContent = async () => {
+      try {
+        const response = await fetch('/siteContent.json');
+        const data = await response.json();
+        setSiteContent(data);
+      } catch (error) {
+        console.error('Failed to load site content:', error);
+      }
+    };
+    fetchContent();
   }, []);
+
+  useEffect(() => {
+    // Initialize with existing content when siteContent is loaded
+    if (siteContent) {
+      setSiteData(prev => ({
+        ...prev,
+        bio: siteContent.bio || "",
+        highlights: siteContent.highlights || []
+      }));
+    }
+  }, [siteContent]);
 
   function handleLogin(e) {
     e.preventDefault();
@@ -361,6 +377,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100 p-4">
+      {!siteContent ? (
+        <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading admin dashboard...</p>
+        </div>
+      ) : (
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-blue-600 text-white p-6">
@@ -897,6 +919,7 @@ export default function AdminDashboard() {
           </p>
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -53,28 +53,28 @@
       "title": "TCP/IP & Advanced Topics",
       "issuer": "Cisco Networking Academy",
       "date": "Dec 2024",
-      "image": "/cert1.jpg"
+      "image": "/cert1.svg"
     },
     {
       "id": 2,
       "title": "Packet Switching Networks",
       "issuer": "Cisco Networking Academy", 
       "date": "Nov 2024",
-      "image": "/cert2.jpg"
+      "image": "/cert2.svg"
     },
     {
       "id": 3,
       "title": "Google Networking",
       "issuer": "Google Cloud",
       "date": "Sep 2024",
-      "image": "/cert3.jpg"
+      "image": "/cert3.svg"
     },
     {
       "id": 4,
       "title": "Responsive Web Design",
       "issuer": "freeCodeCamp",
       "date": "Dec 2023",
-      "image": "/cert4.jpg"
+      "image": "/cert4.svg"
     }
   ],
   "achievements": [

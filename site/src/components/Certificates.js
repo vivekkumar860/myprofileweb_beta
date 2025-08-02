@@ -50,8 +50,14 @@ export default function Certificates() {
               transition={{ duration: 0.8, delay: index * 0.1 }}
               className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 group"
             >
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Award className="w-8 h-8 text-white" />
+              <div className="w-full h-48 bg-gray-100 rounded-xl mb-6 overflow-hidden">
+                <Image
+                  src={cert.image}
+                  alt={`${cert.title} Certificate`}
+                  width={400}
+                  height={300}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               
               <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
