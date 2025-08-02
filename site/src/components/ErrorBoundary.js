@@ -4,7 +4,7 @@ import React from 'react';
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -13,6 +13,10 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('Error caught by boundary:', error, errorInfo);
+    this.setState({ errorInfo });
+    
+    // In a real application, you would send this to an error reporting service
+    // like Sentry, LogRocket, etc.
   }
 
   render() {
@@ -27,14 +31,24 @@ class ErrorBoundary extends React.Component {
             <button
               onClick={() => window.location.reload()}
               className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+              aria-label="Refresh page"
             >
               Refresh Page
             </button>
             {process.env.NODE_ENV === 'development' && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-sm text-gray-500">Error Details</summary>
-                <pre className="mt-2 text-xs text-red-600 overflow-auto">
+                <pre className="mt-2 text-xs text-red-600 overflow-auto max-h-40">
                   {this.state.error?.toString()}
+                  {this.state.errorInfo && (
+                    <>
+                      <br />
+                      <br />
+                      Component Stack:
+                      <br />
+                      {this.state.errorInfo.componentStack}
+                    </>
+                  )}
                 </pre>
               </details>
             )}

@@ -6,7 +6,7 @@ import EnhancedSkills from "../components/EnhancedSkills";
 import EnhancedWorkShowcase from "../components/EnhancedWorkShowcase";
 import Certificates from "../components/Certificates";
 import Achievements from "../components/Achievements";
-import EnhancedContact from "../components/Contact";
+import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
         <EnhancedWorkShowcase />
         <Certificates />
         <Achievements />
-        <EnhancedContact />
+        <Contact />
       </main>
       <Footer />
     </>

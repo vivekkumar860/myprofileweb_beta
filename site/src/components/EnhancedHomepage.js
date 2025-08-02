@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function EnhancedHomepage() {
   const [siteContent, setSiteContent] = useState(null);
@@ -14,17 +14,77 @@ export default function EnhancedHomepage() {
   const [passwordError, setPasswordError] = useState('');
   const [imgError, setImgError] = useState(false);
   const [keySequence, setKeySequence] = useState([]);
+  const [isHoveringAvatar, setIsHoveringAvatar] = useState(false);
+  const [showQuickActions, setShowQuickActions] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState([]);
   const typewriterRef = useRef(null);
+  const containerRef = useRef(null);
 
   const phrases = useMemo(() => [
     "Full Stack Engineer 🚀",
     "Talent Acquisition Expert 🎯", 
     "MERN Stack Developer 💻",
-    "Problem Solver 🧩"
+    "Problem Solver 🧩",
+    "AI/ML Enthusiast 🤖",
+    "Network Security Specialist 🔒"
   ], []);
 
-  // Waving hand animation state
+  // Enhanced waving hand animation state
   const [isWaving, setIsWaving] = useState(false);
+
+  // Real-time clock effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Mouse tracking for interactive effects
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Particle system for enhanced visual effects
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setParticles(prev => {
+        const newParticles = prev.filter(p => p.life > 0).map(p => ({
+          ...p,
+          life: p.life - 1,
+          y: p.y - 1,
+          x: p.x + (Math.random() - 0.5) * 2
+        }));
+        
+        if (Math.random() < 0.1) {
+          newParticles.push({
+            id: Date.now() + Math.random(),
+            x: Math.random() * window.innerWidth,
+            y: window.innerHeight,
+            life: 100,
+            color: ['#3b82f6', '#8b5cf6', '#06b6d4'][Math.floor(Math.random() * 3)]
+          });
+        }
+        
+        return newParticles;
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Start waving animation on mount
@@ -38,20 +98,28 @@ export default function EnhancedHomepage() {
     const fetchContent = async () => {
       try {
         const response = await fetch('/siteContent.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         setSiteContent(data);
       } catch (error) {
         console.error('Failed to load site content:', error);
+        // Set default content to prevent crashes
+        setSiteContent({
+          profile: { name: 'Vivek Kumar' },
+          bio: 'Passionate about creating innovative solutions and building exceptional teams.'
+        });
       }
     };
     fetchContent();
   }, []);
 
-  // Enhanced typewriter effect
+  // Enhanced typewriter effect with more dynamic content
   useEffect(() => {
-    const typeSpeed = 120; // Slower, more deliberate typing
-    const deleteSpeed = 60;
-    const pauseDuration = 2000;
+    const typeSpeed = 100; // Slightly faster for better engagement
+    const deleteSpeed = 50;
+    const pauseDuration = 2500; // Longer pause to read
     
     const timeout = setTimeout(() => {
       const currentPhrase = phrases[phraseIndex];
@@ -114,6 +182,31 @@ export default function EnhancedHomepage() {
     }
   };
 
+  // Quick action handlers
+  const handleQuickAction = (action) => {
+    switch (action) {
+      case 'linkedin':
+        window.open(siteContent?.profile?.linkedin || '#', '_blank');
+        break;
+      case 'github':
+        window.open(siteContent?.profile?.github || '#', '_blank');
+        break;
+      case 'email':
+        window.open(`mailto:${siteContent?.profile?.email || 'trainedvk1@gmail.com'}`);
+        break;
+      case 'contact':
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      case 'projects':
+        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      case 'resume':
+        // Add resume download functionality
+        window.open('/resume.pdf', '_blank');
+        break;
+    }
+  };
+
   if (!siteContent) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -127,8 +220,12 @@ export default function EnhancedHomepage() {
   }
 
   return (
-    <section id="home" className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Enhanced Floating Background Elements */}
+    <section 
+      ref={containerRef}
+      id="home" 
+      className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+    >
+      {/* Enhanced Floating Background Elements with mouse interaction */}
       <div className="absolute inset-0">
         <motion.div 
           animate={{ 
@@ -137,6 +234,10 @@ export default function EnhancedHomepage() {
             scale: [1, 1.1, 1]
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            x: mousePosition.x * 0.02,
+            y: mousePosition.y * 0.02
+          }}
           className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"
         />
         <motion.div 
@@ -146,6 +247,10 @@ export default function EnhancedHomepage() {
             scale: [1, 0.9, 1]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          style={{
+            x: -mousePosition.x * 0.01,
+            y: -mousePosition.y * 0.01
+          }}
           className="absolute top-60 right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
         />
         <motion.div 
@@ -155,12 +260,45 @@ export default function EnhancedHomepage() {
             scale: [1, 1.2, 1]
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          style={{
+            x: mousePosition.x * 0.015,
+            y: mousePosition.y * 0.015
+          }}
           className="absolute bottom-40 left-1/3 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl"
         />
       </div>
 
+      {/* Particle System */}
+      <div className="absolute inset-0 pointer-events-none">
+        {particles.map(particle => (
+          <motion.div
+            key={particle.id}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 2 }}
+            className="absolute w-1 h-1 rounded-full"
+            style={{
+              left: particle.x,
+              top: particle.y,
+              backgroundColor: particle.color,
+              opacity: particle.life / 100
+            }}
+          />
+        ))}
+      </div>
+
       {/* Enhanced Glass Morphism Overlay */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+
+      {/* Real-time Clock Display */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="absolute top-8 right-8 text-white/60 text-sm font-mono z-20"
+      >
+        {currentTime.toLocaleTimeString()}
+      </motion.div>
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-20">
@@ -170,19 +308,23 @@ export default function EnhancedHomepage() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="text-center max-w-4xl mx-auto"
         >
-          {/* Enhanced Avatar with Professional Styling */}
+          {/* Enhanced Avatar with Interactive Effects */}
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
             className="mb-8 relative inline-block"
+            onMouseEnter={() => setIsHoveringAvatar(true)}
+            onMouseLeave={() => setIsHoveringAvatar(false)}
           >
-            <div className="relative">
+            <div className="relative group">
               {!imgError ? (
                 <motion.div
                   whileHover={{ scale: 1.05, rotate: 2 }}
+                  whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-40 h-40 mx-auto relative"
+                  className="w-40 h-40 mx-auto relative cursor-pointer"
+                  onClick={() => setShowQuickActions(!showQuickActions)}
                 >
                   <Image
                     src="/profile.jpg"
@@ -193,20 +335,76 @@ export default function EnhancedHomepage() {
                     onError={() => setImgError(true)}
                     priority
                   />
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+                  <motion.div 
+                    animate={isHoveringAvatar ? { opacity: 1 } : { opacity: 0.3 }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"
+                  />
+                  
+                  {/* Interactive ring effect */}
+                  <motion.div
+                    animate={isHoveringAvatar ? { scale: 1.2, opacity: 0 } : { scale: 1, opacity: 0 }}
+                    transition={{ duration: 2, repeat: isHoveringAvatar ? Infinity : 0 }}
+                    className="absolute inset-0 rounded-full border-2 border-blue-400"
+                  />
                 </motion.div>
               ) : (
                 <motion.div
                   whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="w-40 h-40 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-6xl font-bold shadow-2xl border-4 border-white/20"
+                  className="w-40 h-40 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-6xl font-bold shadow-2xl border-4 border-white/20 cursor-pointer"
+                  onClick={() => setShowQuickActions(!showQuickActions)}
                 >
                   VK
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/30 animate-pulse"></div>
+                  <motion.div 
+                    animate={isHoveringAvatar ? { opacity: 1 } : { opacity: 0.3 }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/30 animate-pulse"
+                  />
                 </motion.div>
               )}
             </div>
           </motion.div>
+
+          {/* Quick Actions Menu */}
+          <AnimatePresence>
+            {showQuickActions && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-2xl z-30"
+              >
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { icon: '💼', label: 'LinkedIn', action: 'linkedin' },
+                    { icon: '🐙', label: 'GitHub', action: 'github' },
+                    { icon: '📧', label: 'Email', action: 'email' },
+                    { icon: '📄', label: 'Resume', action: 'resume' },
+                    { icon: '💬', label: 'Contact', action: 'contact' },
+                    { icon: '🚀', label: 'Projects', action: 'projects' }
+                  ].map((item, index) => (
+                    <motion.button
+                      key={item.action}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        handleQuickAction(item.action);
+                        setShowQuickActions(false);
+                      }}
+                      className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-200 text-white/80 hover:text-white"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <span className="text-2xl">{item.icon}</span>
+                      <span className="text-xs font-medium">{item.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Enhanced Greeting with Animated Wave */}
           <motion.div
@@ -239,7 +437,7 @@ export default function EnhancedHomepage() {
             </h1>
           </motion.div>
 
-          {/* Enhanced Typewriter Title */}
+          {/* Enhanced Typewriter Title with better visual feedback */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -250,13 +448,13 @@ export default function EnhancedHomepage() {
               I&apos;m a{' '}
               <span 
                 ref={typewriterRef}
-                className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent relative"
+                className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent relative inline-block"
               >
                 {currentTypewriterText}
                 <motion.span
                   animate={{ opacity: [1, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
-                  className="absolute text-white"
+                  className="absolute text-white ml-1"
                 >
                   |
                 </motion.span>
@@ -264,21 +462,48 @@ export default function EnhancedHomepage() {
             </h2>
           </motion.div>
 
-          {/* Enhanced Bio */}
+          {/* Enhanced Bio with interactive elements */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
             {siteContent.bio || 'Passionate about creating innovative solutions and building exceptional teams.'}
           </motion.p>
 
-          {/* Enhanced CTA Buttons */}
+          {/* Live Statistics */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
+            className="flex justify-center gap-8 mb-8 text-white/70"
+          >
+            {[
+              { label: 'Experience', value: '2+', unit: 'Years' },
+              { label: 'Projects', value: '10+', unit: 'Completed' },
+              { label: 'Skills', value: '15+', unit: 'Technologies' }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 + index * 0.1 }}
+              >
+                <div className="text-2xl font-bold text-white">{stat.value}</div>
+                <div className="text-sm">{stat.label}</div>
+                <div className="text-xs text-white/50">{stat.unit}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Enhanced CTA Buttons with more options */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <motion.a
@@ -309,21 +534,31 @@ export default function EnhancedHomepage() {
             >
               Get In Touch
             </motion.button>
+
+            <motion.button
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-white/5 backdrop-blur-md text-white font-semibold rounded-full border border-white/10 hover:bg-white/10 transition-all duration-300 shadow-lg"
+            >
+              View Projects
+            </motion.button>
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Scroll Indicator */}
+        {/* Enhanced Scroll Indicator with better interaction - Hidden on desktop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             className="flex flex-col items-center text-white/60 cursor-pointer group"
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            whileHover={{ scale: 1.1 }}
           >
             <span className="text-sm mb-2 group-hover:text-white/80 transition-colors">Scroll to explore</span>
             <motion.div
@@ -340,7 +575,7 @@ export default function EnhancedHomepage() {
         </motion.div>
       </div>
 
-      {/* Enhanced Section Divider */}
+      {/* Enhanced Section Divider with animated elements */}
       <motion.div 
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
@@ -357,70 +592,74 @@ export default function EnhancedHomepage() {
         />
       </motion.div>
 
-      {/* Enhanced Admin Modal */}
-      {showAdminModal && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4"
-          onClick={() => setShowAdminModal(false)}
-        >
+      {/* Enhanced Admin Modal with better UX */}
+      <AnimatePresence>
+        {showAdminModal && (
           <motion.div
-            initial={{ scale: 0.8, y: 50 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.8, y: 50 }}
-            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 w-full max-w-md shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            onClick={() => setShowAdminModal(false)}
           >
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">Admin Access</h3>
-            <form onSubmit={handleAdminLogin} className="space-y-4">
-              <div>
-                <input
-                  type="password"
-                  value={adminPassword}
-                  onChange={(e) => setAdminPassword(e.target.value)}
-                  onKeyDown={handleModalKeyPress}
-                  placeholder="Enter admin password"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 backdrop-blur-sm"
-                  autoFocus
-                />
-              </div>
-              {passwordError && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-red-400 text-sm text-center"
-                >
-                  {passwordError}
-                </motion.p>
-              )}
-              <div className="flex gap-3">
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
-                >
-                  Login
-                </motion.button>
-                <motion.button
-                  type="button"
-                  onClick={() => setShowAdminModal(false)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex-1 bg-white/10 text-white py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-200"
-                >
-                  Cancel
-                </motion.button>
-              </div>
-            </form>
-            <p className="text-white/50 text-xs text-center mt-4">
-              Press Escape to close • Enter to submit
-            </p>
+            <motion.div
+              initial={{ scale: 0.8, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.8, y: 50 }}
+              className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 w-full max-w-md shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">Admin Access</h3>
+              <form onSubmit={handleAdminLogin} className="space-y-4">
+                <div>
+                  <input
+                    type="password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    onKeyDown={handleModalKeyPress}
+                    placeholder="Enter admin password"
+                    aria-label="Admin Password"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 backdrop-blur-sm"
+                    autoFocus
+                  />
+                </div>
+                {passwordError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-400 text-sm text-center"
+                    role="alert"
+                  >
+                    {passwordError}
+                  </motion.p>
+                )}
+                <div className="flex gap-3">
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
+                  >
+                    Login
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    onClick={() => setShowAdminModal(false)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1 bg-white/10 text-white py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-200"
+                  >
+                    Cancel
+                  </motion.button>
+                </div>
+              </form>
+              <p className="text-white/50 text-xs text-center mt-4">
+                Press Escape to close • Enter to submit
+              </p>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 }

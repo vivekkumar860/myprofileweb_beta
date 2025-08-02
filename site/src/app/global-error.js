@@ -13,9 +13,18 @@ export default function GlobalError({ error, reset }) {
             <button
               className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
               onClick={() => reset()}
+              aria-label="Try again"
             >
               Try again
             </button>
+            {process.env.NODE_ENV === 'development' && error && (
+              <details className="mt-4 text-left">
+                <summary className="cursor-pointer text-sm text-gray-500">Error Details</summary>
+                <pre className="mt-2 text-xs text-red-600 overflow-auto max-h-40">
+                  {error.toString()}
+                </pre>
+              </details>
+            )}
           </div>
         </div>
       </body>

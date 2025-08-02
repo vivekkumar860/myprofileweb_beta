@@ -101,6 +101,8 @@ export default function Navigation() {
         top: offsetTop - navHeight,
         behavior: 'smooth'
       });
+    } else {
+      console.warn(`Element with href ${href} not found`);
     }
   };
 
@@ -226,7 +228,9 @@ export default function Navigation() {
               className="p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label="Menu"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <motion.div
                 animate={isMobileMenuOpen ? "open" : "closed"}
@@ -259,6 +263,9 @@ export default function Navigation() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="md:hidden overflow-hidden bg-white/95 backdrop-blur-xl border-t border-gray-200/50"
+              id="mobile-menu"
+              role="navigation"
+              aria-label="Mobile navigation menu"
             >
               <div className="px-4 pt-4 pb-6 space-y-2 max-h-96 overflow-y-auto">
                 {navItems.map((item, index) => (

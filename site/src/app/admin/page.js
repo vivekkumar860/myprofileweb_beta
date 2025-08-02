@@ -1,139 +1,78 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { motion } from 'framer-motion';
+import { useSiteContent } from "../../hooks/useSiteContent";
+import { useAdminAuth } from "../../hooks/useAdminAuth";
+import { ADMIN_CONFIG, BORDER_OPTIONS, DEFAULT_CONTENT } from "../../lib/constants";
+import AdminLogin from "../../components/admin/AdminLogin";
+import AdminTabs from "../../components/admin/AdminTabs";
+import AdminControls from "../../components/admin/AdminControls";
+import AdminDashboard from "../../components/admin/AdminDashboard";
+import { InputField, TextAreaField, ArrayField, SelectField } from "../../components/ui/FormFields";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
-// Note: For production, this should be handled server-side with proper authentication
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
-
-// Default highlight template
-const DEFAULT_HIGHLIGHT = {
-  icon: "🌟",
-  title: "New Highlight",
-  desc: "Description here",
-  border: "border-blue-500"
-};
-
-// Available border color options
-const BORDER_OPTIONS = [
-  "border-blue-500",
-  "border-green-500", 
-  "border-yellow-500",
-  "border-purple-500",
-  "border-pink-500",
-  "border-indigo-500",
-  "border-red-500",
-  "border-orange-500",
-  "border-teal-500",
-  "border-cyan-500"
-];
-
-export default function AdminDashboard() {
-  const [siteContent, setSiteContent] = useState(null);
-  const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState("");
+export default function AdminDashboardPage() {
+  const { siteContent, loading, error, saveContent } = useSiteContent();
+  const { isAuthenticated, login, logout } = useAdminAuth();
+  
+  const [siteData, setSiteData] = useState(DEFAULT_CONTENT);
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState("profile");
-  
-  // Site content state
-  const [siteData, setSiteData] = useState({
-    bio: "",
-    highlights: [],
-    profile: {
-      name: "Vivek Kumar",
-      titles: [
-        "Talent Acquisition Coordinator",
-        "B.Tech. CSE (AI & ML) Student", 
-        "Full Stack Enthusiast",
-        "Open to Collaborations"
-      ],
-      location: "Phagwara, Punjab",
-      linkedinUrl: "https://www.linkedin.com/in/vivekkumar860/",
-      email: "trainedvk1@gmail.com",
-      phone: "+91-XXXXXXXXXX",
-      profileImage: "/profile.jpg"
-    },
-    skills: {
-      technical: ["Java", "JavaScript", "Python", "C/C++", "HTML", "CSS"],
-      tools: ["React", "Node.js", "Git", "VS Code", "Figma"],
-      databases: ["MySQL", "MongoDB", "PostgreSQL"],
-      cloud: ["AWS", "Google Cloud", "Azure"]
-    },
-    experience: [
-      {
-        id: 1,
-        company: "Placify.ai",
-        position: "Talent Acquisition Coordinator",
-        duration: "2024 - Present",
-        description: "Supporting end-to-end hiring processes including job posting, candidate screening, and onboarding.",
-        achievements: ["Streamlined hiring process", "Improved candidate experience"]
-      }
-    ],
-    education: [
-      {
-        id: 1,
-        institution: "Lovely Professional University",
-        degree: "B.Tech. Computer Science & Engineering (AI & ML)",
-        duration: "2022 - 2026",
-        cgpa: "8.5/10",
-        activities: ["Coding Club", "Anime Club"]
-      }
-    ],
-    certifications: [
-      {
-        id: 1,
-        name: "TCP/IP & Advanced Topics",
-        issuer: "Coursera",
-        date: "Dec 2024",
-        credentialId: "ABC123"
-      }
-    ],
-    projects: [
-      {
-        id: 1,
-        name: "Portfolio Website",
-        description: "Personal portfolio built with Next.js and Tailwind CSS",
-        technologies: ["Next.js", "React", "Tailwind CSS"],
-        githubUrl: "https://github.com/username/portfolio",
-        liveUrl: "https://portfolio.com",
-        features: ["Responsive design", "Admin dashboard", "Dynamic content"]
-      }
-    ]
-  });
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [autoSave, setAutoSave] = useState(true);
+  const [lastSaved, setLastSaved] = useState(null);
 
-  // Load site content on component mount
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        const response = await fetch('/siteContent.json');
-        const data = await response.json();
-        setSiteContent(data);
-      } catch (error) {
-        console.error('Failed to load site content:', error);
-      }
-    };
-    fetchContent();
-  }, []);
+  // Mock analytics data
+  const analytics = {
+    visitors: { today: 45, week: 320, month: 1240 },
+    pageViews: { today: 89, week: 650, month: 2800 },
+    engagement: { avgTime: "2m 34s", bounceRate: "32%", conversion: "4.2%" }
+  };
 
+  // Update site data when content loads
   useEffect(() => {
-    // Initialize with existing content when siteContent is loaded
     if (siteContent) {
       setSiteData(prev => ({
         ...prev,
         bio: siteContent.bio || "",
-        highlights: siteContent.highlights || []
+        highlights: siteContent.highlights || [],
+        profile: {
+          ...prev.profile,
+          ...siteContent.profile,
+        },
+        projects: siteContent.projects || prev.projects,
+        certifications: siteContent.certificates || prev.certifications,
+        achievements: siteContent.achievements || [],
+        statistics: siteContent.statistics || { experience: "2+", projects: "10+", clients: "5+" }
       }));
     }
   }, [siteContent]);
 
-  function handleLogin(e) {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setAuthed(true);
-      setMessage("");
-    } else {
-      setMessage("Incorrect password");
+  // Auto-save functionality
+  useEffect(() => {
+    if (autoSave && siteData && lastSaved !== JSON.stringify(siteData)) {
+      const timer = setTimeout(() => {
+        handleAutoSave();
+      }, ADMIN_CONFIG.autoSaveDelay);
+      return () => clearTimeout(timer);
     }
-  }
+  }, [siteData, autoSave, lastSaved, handleAutoSave]);
+
+  const handleAutoSave = useCallback(async () => {
+    try {
+      const result = await saveContent(siteData);
+      if (result.success) {
+        setLastSaved(JSON.stringify(siteData));
+      }
+    } catch (err) {
+      console.error('Auto-save error:', err);
+    }
+  }, [siteData, saveContent]);
+
+  const handleLogin = (password) => {
+    return login(password);
+  };
 
   // Generic handlers for different data types
   const updateField = (section, field, value) => {
@@ -157,7 +96,7 @@ export default function AdminDashboard() {
 
   const addToArray = (section, newItem = null) => {
     const defaultItems = {
-      highlights: DEFAULT_HIGHLIGHT,
+      highlights: { icon: "🌟", title: "New Highlight", desc: "Description here", border: "border-blue-500" },
       experience: {
         id: Date.now(),
         company: "New Company",
@@ -225,13 +164,11 @@ export default function AdminDashboard() {
     }));
   };
 
-  async function handleSave(e) {
+  const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
     setMessage("");
     
-    // Note: API routes are not available in static export (GitHub Pages)
-    // This functionality is disabled for static deployments
     if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
       setMessage("⚠️ Save functionality is not available in GitHub Pages deployment. Edit siteContent.json directly and redeploy.");
       setSaving(false);
@@ -251,7 +188,6 @@ export default function AdminDashboard() {
       return;
     }
     
-    // Validate each highlight
     for (let i = 0; i < siteData.highlights.length; i++) {
       const highlight = siteData.highlights[i];
       if (!highlight.title?.trim() || !highlight.desc?.trim() || !highlight.icon?.trim()) {
@@ -262,20 +198,13 @@ export default function AdminDashboard() {
     }
     
     try {
-      const response = await fetch('/api/save-content', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(siteData),
-      });
-
-      const data = await response.json();
+      const result = await saveContent(siteData);
       
-      if (response.ok) {
+      if (result.success) {
         setMessage("✅ Changes saved successfully! Refresh the homepage to see updates.");
+        setLastSaved(JSON.stringify(siteData));
       } else {
-        setMessage(`❌ Error: ${data.error}`);
+        setMessage(`❌ Error: ${result.error || 'Unknown error'}`);
       }
     } catch (err) {
       setMessage("❌ Error saving changes. Please try again.");
@@ -283,132 +212,107 @@ export default function AdminDashboard() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const exportData = () => {
+    const dataStr = JSON.stringify(siteData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'site-content-backup.json';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const importData = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          setSiteData(data);
+          setMessage("✅ Data imported successfully!");
+        } catch (error) {
+          setMessage("❌ Invalid JSON file");
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={handleLogin} />;
   }
 
-  if (!authed) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100">
-        <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md flex flex-col gap-4 w-80">
-          <h2 className="text-xl font-bold mb-2 text-blue-700">Admin Login</h2>
-          <input
-            type="password"
-            placeholder="Enter admin password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="border rounded px-3 py-2 bg-white text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button type="submit" className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700">Login</button>
-          {message && <p className="text-red-500 text-sm">{message}</p>}
-        </form>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <LoadingSpinner size="lg" text="Loading enhanced admin dashboard..." />
       </div>
     );
   }
 
-  const TabButton = ({ id, label, active, onClick }) => (
-    <button
-      onClick={() => onClick(id)}
-      className={`px-4 py-2 rounded-lg font-medium transition-all ${
-        active 
-          ? 'bg-blue-600 text-white shadow-md' 
-          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-      }`}
-    >
-      {label}
-    </button>
-  );
-
-  const InputField = ({ label, value, onChange, type = "text", placeholder = "", className = "" }) => (
-    <div className={className}>
-      <label className="block font-semibold mb-1 text-gray-700">{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 border-gray-300"
-      />
-    </div>
-  );
-
-  const TextAreaField = ({ label, value, onChange, placeholder = "", rows = 3, className = "" }) => (
-    <div className={className}>
-      <label className="block font-semibold mb-1 text-gray-700">{label}</label>
-      <textarea
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        rows={rows}
-        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 border-gray-300"
-      />
-    </div>
-  );
-
-  const ArrayField = ({ label, items, onAdd, onRemove, onUpdate, placeholder = "New item" }) => (
-    <div>
-      <label className="block font-semibold mb-2 text-gray-700">{label}</label>
-      <div className="space-y-2">
-        {items.map((item, index) => (
-          <div key={index} className="flex gap-2">
-            <input
-              value={item}
-              onChange={(e) => onUpdate(index, e.target.value)}
-              className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 border-gray-300"
-              placeholder={placeholder}
-            />
-            <button
-              type="button"
-              onClick={() => onRemove(index)}
-              className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors"
-            >
-              ×
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={onAdd}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
-        >
-          + Add {label.slice(0, -1)}
-        </button>
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="bg-white p-8 rounded-2xl shadow-2xl text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Dashboard</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all"
+          >
+            Retry
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100 p-4">
-      {!siteContent ? (
-        <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-8 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading admin dashboard...</p>
-        </div>
-      ) : (
-      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        {/* Header */}
-        <div className="bg-blue-600 text-white p-6">
-          <h1 className="text-3xl font-bold">Complete Admin Dashboard</h1>
-          <p className="text-blue-100 mt-2">Manage every aspect of your portfolio website</p>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="bg-gray-50 p-4 border-b">
-          <div className="flex flex-wrap gap-2">
-            <TabButton id="profile" label="👤 Profile" active={activeTab === "profile"} onClick={setActiveTab} />
-            <TabButton id="bio" label="📝 Bio" active={activeTab === "bio"} onClick={setActiveTab} />
-            <TabButton id="highlights" label="⭐ Highlights" active={activeTab === "highlights"} onClick={setActiveTab} />
-            <TabButton id="skills" label="💻 Skills" active={activeTab === "skills"} onClick={setActiveTab} />
-            <TabButton id="experience" label="💼 Experience" active={activeTab === "experience"} onClick={setActiveTab} />
-            <TabButton id="education" label="🎓 Education" active={activeTab === "education"} onClick={setActiveTab} />
-            <TabButton id="certifications" label="📜 Certifications" active={activeTab === "certifications"} onClick={setActiveTab} />
-            <TabButton id="projects" label="🚀 Projects" active={activeTab === "projects"} onClick={setActiveTab} />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Enhanced Header */}
+        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white p-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Enhanced Admin Dashboard</h1>
+              <p className="text-blue-100 text-lg">Manage your portfolio with advanced features</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={logout}
+                className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
 
-        <form onSubmit={handleSave} className="p-6">
+        <AdminTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        <AdminControls 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          autoSave={autoSave}
+          onAutoSaveChange={setAutoSave}
+          lastSaved={lastSaved}
+          onExport={exportData}
+          onImport={importData}
+        />
+
+        <form onSubmit={handleSave} className="p-8">
+          {/* Dashboard Tab */}
+          {activeTab === "dashboard" && (
+            <AdminDashboard analytics={analytics} onTabChange={setActiveTab} />
+          )}
+
           {/* Profile Tab */}
           {activeTab === "profile" && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Profile Information</h2>
+            <div className="space-y-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Profile Information</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InputField
@@ -416,6 +320,7 @@ export default function AdminDashboard() {
                   value={siteData.profile.name}
                   onChange={(e) => updateField('profile', 'name', e.target.value)}
                   placeholder="Your full name"
+                  required
                 />
                 
                 <InputField
@@ -423,6 +328,7 @@ export default function AdminDashboard() {
                   value={siteData.profile.location}
                   onChange={(e) => updateField('profile', 'location', e.target.value)}
                   placeholder="City, State/Country"
+                  required
                 />
                 
                 <InputField
@@ -431,6 +337,7 @@ export default function AdminDashboard() {
                   value={siteData.profile.email}
                   onChange={(e) => updateField('profile', 'email', e.target.value)}
                   placeholder="trainedvk1@gmail.com"
+                  required
                 />
                 
                 <InputField
@@ -438,6 +345,7 @@ export default function AdminDashboard() {
                   value={siteData.profile.phone}
                   onChange={(e) => updateField('profile', 'phone', e.target.value)}
                   placeholder="+91-XXXXXXXXXX"
+                  required
                 />
                 
                 <InputField
@@ -446,6 +354,7 @@ export default function AdminDashboard() {
                   onChange={(e) => updateField('profile', 'linkedinUrl', e.target.value)}
                   placeholder="https://linkedin.com/in/username"
                   className="md:col-span-2"
+                  required
                 />
                 
                 <InputField
@@ -454,6 +363,7 @@ export default function AdminDashboard() {
                   onChange={(e) => updateField('profile', 'profileImage', e.target.value)}
                   placeholder="/profile.jpg"
                   className="md:col-span-2"
+                  required
                 />
               </div>
 
@@ -464,33 +374,35 @@ export default function AdminDashboard() {
                 onRemove={(index) => updateField('profile', 'titles', siteData.profile.titles.filter((_, i) => i !== index))}
                 onUpdate={(index, value) => updateField('profile', 'titles', siteData.profile.titles.map((title, i) => i === index ? value : title))}
                 placeholder="Professional title"
+                required
               />
             </div>
           )}
 
           {/* Bio Tab */}
           {activeTab === "bio" && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Biography</h2>
+            <div className="space-y-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Biography</h2>
               <TextAreaField
                 label="About Me"
                 value={siteData.bio}
                 onChange={(e) => setSiteData(prev => ({ ...prev, bio: e.target.value }))}
                 placeholder="Write your professional bio here..."
                 rows={8}
+                required
               />
             </div>
           )}
 
           {/* Highlights Tab */}
           {activeTab === "highlights" && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Highlights</h2>
+                <h2 className="text-3xl font-bold text-gray-800">Highlights</h2>
                 <button
                   type="button"
                   onClick={() => addToArray('highlights')}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-all"
                 >
                   + Add Highlight
                 </button>
@@ -498,13 +410,13 @@ export default function AdminDashboard() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {siteData.highlights.map((highlight, idx) => (
-                  <div key={idx} className="bg-gray-50 border rounded-lg p-4 space-y-3">
+                  <div key={idx} className="bg-gray-50 border border-gray-200 rounded-xl p-6 space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-gray-700">Highlight {idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFromArray('highlights', idx)}
-                        className="bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600"
+                        className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-all"
                       >
                         ×
                       </button>
@@ -515,6 +427,7 @@ export default function AdminDashboard() {
                       value={highlight.icon}
                       onChange={(e) => updateArrayField('highlights', idx, 'icon', e.target.value)}
                       placeholder="🌟"
+                      required
                     />
                     
                     <InputField
@@ -522,6 +435,7 @@ export default function AdminDashboard() {
                       value={highlight.title}
                       onChange={(e) => updateArrayField('highlights', idx, 'title', e.target.value)}
                       placeholder="Highlight title"
+                      required
                     />
                     
                     <TextAreaField
@@ -530,22 +444,19 @@ export default function AdminDashboard() {
                       onChange={(e) => updateArrayField('highlights', idx, 'desc', e.target.value)}
                       placeholder="Description here..."
                       rows={3}
+                      required
                     />
                     
-                    <div>
-                      <label className="block font-semibold mb-1 text-gray-700">Border Color</label>
-                      <select
-                        value={highlight.border}
-                        onChange={(e) => updateArrayField('highlights', idx, 'border', e.target.value)}
-                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        {BORDER_OPTIONS.map(option => (
-                          <option key={option} value={option}>
-                            {option.replace('border-', '').replace('-', ' ')}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <SelectField
+                      label="Border Color"
+                      value={highlight.border}
+                      onChange={(e) => updateArrayField('highlights', idx, 'border', e.target.value)}
+                      options={BORDER_OPTIONS.map(option => ({
+                        value: option,
+                        label: option.replace('border-', '').replace('-', ' ')
+                      }))}
+                      required
+                    />
                   </div>
                 ))}
               </div>
@@ -554,10 +465,10 @@ export default function AdminDashboard() {
 
           {/* Skills Tab */}
           {activeTab === "skills" && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Skills & Technologies</h2>
+            <div className="space-y-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Skills & Technologies</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <ArrayField
                   label="Technical Skills"
                   items={siteData.skills.technical}
@@ -599,38 +510,39 @@ export default function AdminDashboard() {
 
           {/* Experience Tab */}
           {activeTab === "experience" && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Work Experience</h2>
+                <h2 className="text-3xl font-bold text-gray-800">Work Experience</h2>
                 <button
                   type="button"
                   onClick={() => addToArray('experience')}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-all"
                 >
                   + Add Experience
                 </button>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {siteData.experience.map((exp, idx) => (
-                  <div key={exp.id} className="bg-gray-50 border rounded-lg p-6 space-y-4">
+                  <div key={exp.id} className="bg-gray-50 border border-gray-200 rounded-xl p-8 space-y-6">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-700">Experience {idx + 1}</span>
+                      <span className="font-semibold text-gray-700 text-lg">Experience {idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFromArray('experience', idx)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
                       >
                         × Remove
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <InputField
                         label="Company"
                         value={exp.company}
                         onChange={(e) => updateArrayField('experience', idx, 'company', e.target.value)}
                         placeholder="Company name"
+                        required
                       />
                       
                       <InputField
@@ -638,6 +550,7 @@ export default function AdminDashboard() {
                         value={exp.position}
                         onChange={(e) => updateArrayField('experience', idx, 'position', e.target.value)}
                         placeholder="Job title"
+                        required
                       />
                       
                       <InputField
@@ -646,6 +559,7 @@ export default function AdminDashboard() {
                         onChange={(e) => updateArrayField('experience', idx, 'duration', e.target.value)}
                         placeholder="2024 - Present"
                         className="md:col-span-2"
+                        required
                       />
                     </div>
                     
@@ -654,7 +568,8 @@ export default function AdminDashboard() {
                       value={exp.description}
                       onChange={(e) => updateArrayField('experience', idx, 'description', e.target.value)}
                       placeholder="Job description and responsibilities..."
-                      rows={3}
+                      rows={4}
+                      required
                     />
                     
                     <ArrayField
@@ -673,38 +588,39 @@ export default function AdminDashboard() {
 
           {/* Education Tab */}
           {activeTab === "education" && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Education</h2>
+                <h2 className="text-3xl font-bold text-gray-800">Education</h2>
                 <button
                   type="button"
                   onClick={() => addToArray('education')}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-all"
                 >
                   + Add Education
                 </button>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {siteData.education.map((edu, idx) => (
-                  <div key={edu.id} className="bg-gray-50 border rounded-lg p-6 space-y-4">
+                  <div key={edu.id} className="bg-gray-50 border border-gray-200 rounded-xl p-8 space-y-6">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-700">Education {idx + 1}</span>
+                      <span className="font-semibold text-gray-700 text-lg">Education {idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFromArray('education', idx)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
                       >
                         × Remove
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <InputField
                         label="Institution"
                         value={edu.institution}
                         onChange={(e) => updateArrayField('education', idx, 'institution', e.target.value)}
                         placeholder="University/College name"
+                        required
                       />
                       
                       <InputField
@@ -712,6 +628,7 @@ export default function AdminDashboard() {
                         value={edu.degree}
                         onChange={(e) => updateArrayField('education', idx, 'degree', e.target.value)}
                         placeholder="Degree and field of study"
+                        required
                       />
                       
                       <InputField
@@ -719,6 +636,7 @@ export default function AdminDashboard() {
                         value={edu.duration}
                         onChange={(e) => updateArrayField('education', idx, 'duration', e.target.value)}
                         placeholder="2022 - 2026"
+                        required
                       />
                       
                       <InputField
@@ -726,6 +644,7 @@ export default function AdminDashboard() {
                         value={edu.cgpa}
                         onChange={(e) => updateArrayField('education', idx, 'cgpa', e.target.value)}
                         placeholder="8.5/10"
+                        required
                       />
                     </div>
                     
@@ -745,13 +664,13 @@ export default function AdminDashboard() {
 
           {/* Certifications Tab */}
           {activeTab === "certifications" && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Certifications</h2>
+                <h2 className="text-3xl font-bold text-gray-800">Certifications</h2>
                 <button
                   type="button"
                   onClick={() => addToArray('certifications')}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-all"
                 >
                   + Add Certification
                 </button>
@@ -759,13 +678,13 @@ export default function AdminDashboard() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {siteData.certifications.map((cert, idx) => (
-                  <div key={cert.id} className="bg-gray-50 border rounded-lg p-4 space-y-3">
+                  <div key={cert.id} className="bg-gray-50 border border-gray-200 rounded-xl p-6 space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-gray-700">Certificate {idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFromArray('certifications', idx)}
-                        className="bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600"
+                        className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-all"
                       >
                         ×
                       </button>
@@ -776,6 +695,7 @@ export default function AdminDashboard() {
                       value={cert.name}
                       onChange={(e) => updateArrayField('certifications', idx, 'name', e.target.value)}
                       placeholder="Certification title"
+                      required
                     />
                     
                     <InputField
@@ -783,6 +703,7 @@ export default function AdminDashboard() {
                       value={cert.issuer}
                       onChange={(e) => updateArrayField('certifications', idx, 'issuer', e.target.value)}
                       placeholder="Coursera, Udemy, etc."
+                      required
                     />
                     
                     <InputField
@@ -790,6 +711,7 @@ export default function AdminDashboard() {
                       value={cert.date}
                       onChange={(e) => updateArrayField('certifications', idx, 'date', e.target.value)}
                       placeholder="Dec 2024"
+                      required
                     />
                     
                     <InputField
@@ -806,38 +728,39 @@ export default function AdminDashboard() {
 
           {/* Projects Tab */}
           {activeTab === "projects" && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">Projects</h2>
+                <h2 className="text-3xl font-bold text-gray-800">Projects</h2>
                 <button
                   type="button"
                   onClick={() => addToArray('projects')}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-all"
                 >
                   + Add Project
                 </button>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {siteData.projects.map((project, idx) => (
-                  <div key={project.id} className="bg-gray-50 border rounded-lg p-6 space-y-4">
+                  <div key={project.id} className="bg-gray-50 border border-gray-200 rounded-xl p-8 space-y-6">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-700">Project {idx + 1}</span>
+                      <span className="font-semibold text-gray-700 text-lg">Project {idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFromArray('projects', idx)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
                       >
                         × Remove
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <InputField
                         label="Project Name"
                         value={project.name}
                         onChange={(e) => updateArrayField('projects', idx, 'name', e.target.value)}
                         placeholder="Project title"
+                        required
                       />
                       
                       <InputField
@@ -861,7 +784,8 @@ export default function AdminDashboard() {
                       value={project.description}
                       onChange={(e) => updateArrayField('projects', idx, 'description', e.target.value)}
                       placeholder="Project description and what it does..."
-                      rows={3}
+                      rows={4}
+                      required
                     />
                     
                     <ArrayField
@@ -887,39 +811,55 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* Save Button */}
-          <div className="flex justify-center pt-6 border-t">
+          {/* Enhanced Save Button */}
+          <div className="flex justify-center pt-8 border-t">
             <button 
               type="submit" 
               disabled={saving}
-              className={`px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 ${
+              className={`px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 ${
                 saving 
                   ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
               }`}
             >
-              {saving ? 'Saving Changes...' : 'Save All Changes'}
+              {saving ? (
+                <div className="flex items-center gap-2">
+                  <LoadingSpinner size="sm" text="" />
+                  Saving Changes...
+                </div>
+              ) : (
+                'Save All Changes'
+              )}
             </button>
           </div>
 
-          {/* Status Message */}
+          {/* Enhanced Status Message */}
           {message && (
-            <div className={`p-4 rounded-lg text-center font-medium ${
-              message.includes('✅') ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200'
-            }`}>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`p-4 rounded-xl text-center font-medium mt-6 ${
+                message.includes('✅') 
+                  ? 'bg-green-50 text-green-800 border border-green-200' 
+                  : 'bg-red-50 text-red-800 border border-red-200'
+              }`}
+            >
               {message}
-            </div>
+            </motion.div>
           )}
         </form>
 
-        {/* Footer */}
-        <div className="bg-gray-50 p-4 border-t text-center">
-          <p className="text-gray-500 text-sm">
-            💡 <strong>Tip:</strong> All changes are saved to siteContent.json. Refresh your homepage to see updates.
-          </p>
+        {/* Enhanced Footer */}
+        <div className="bg-gray-50 p-6 border-t">
+          <div className="flex items-center justify-between text-sm text-gray-500">
+            <p>💡 <strong>Tip:</strong> All changes are saved to siteContent.json. Refresh your homepage to see updates.</p>
+            <div className="flex items-center gap-4">
+              <span>Auto-save: {autoSave ? 'Enabled' : 'Disabled'}</span>
+              <span>Last saved: {lastSaved ? new Date().toLocaleTimeString() : 'Never'}</span>
+            </div>
+          </div>
         </div>
       </div>
-      )}
     </div>
   );
 }

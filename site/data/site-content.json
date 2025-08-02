@@ -1,0 +1,33 @@
+{
+  "profile": {
+    "name": "Fresh Test",
+    "titles": [
+      "Talent Acquisition Coordinator",
+      "B.Tech. CSE (AI & ML) Student",
+      "Full Stack Enthusiast",
+      "Open to Collaborations"
+    ],
+    "location": "Phagwara, Punjab",
+    "linkedinUrl": "https://www.linkedin.com/in/vivekkumar021/",
+    "email": "trainedvk1@gmail.com",
+    "phone": "+91-XXXXXXXXXX",
+    "profileImage": "/profile.jpg"
+  },
+  "bio": "Fresh bio",
+  "highlights": [
+    {
+      "icon": "🌟",
+      "title": "Fresh",
+      "desc": "Fresh desc",
+      "border": "border-blue-500"
+    }
+  ],
+  "projects": [],
+  "statistics": {
+    "experience": "2+",
+    "projects": "10+",
+    "clients": "5+"
+  },
+  "certificates": [],
+  "achievements": []
+}

@@ -55,7 +55,7 @@ export default function EnhancedWorkShowcase() {
             client: "Enterprise Client"
           }
         ];
-        console.log('Loaded projects:', projectData.length); // Debug log
+        // Debug log removed for production
         setProjects(projectData);
       } catch (error) {
         console.error('Failed to load projects:', error);

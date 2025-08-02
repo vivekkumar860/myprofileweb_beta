@@ -55,16 +55,27 @@ export default function EnhancedContact() {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call - replace with actual endpoint
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success('Thank you! Your message has been sent successfully. I\'ll get back to you soon.', {
-        duration: 5000,
-        position: 'top-center',
+      // In a real application, this would send to your backend API
+      // For now, we'll simulate the API call and show success
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-      
-      reset();
+
+      if (response.ok) {
+        toast.success('Thank you! Your message has been sent successfully. I\'ll get back to you soon.', {
+          duration: 5000,
+          position: 'top-center',
+        });
+        reset();
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
+      console.error('Contact form error:', error);
       toast.error('Sorry, there was an error sending your message. Please try again or contact me directly.', {
         duration: 5000,
         position: 'top-center',
@@ -178,6 +189,8 @@ export default function EnhancedContact() {
                       {...register('name')}
                       type="text"
                       id="name"
+                      aria-label="Full Name"
+                      aria-describedby={errors.name ? "name-error" : undefined}
                       className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 ${
                         errors.name ? 'border-red-300 bg-red-50' : 'border-gray-300'
                       }`}
@@ -185,9 +198,11 @@ export default function EnhancedContact() {
                     />
                     {errors.name && (
                       <motion.p
+                        id="name-error"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-red-500 text-sm mt-1"
+                        role="alert"
                       >
                         {errors.name.message}
                       </motion.p>
@@ -201,6 +216,8 @@ export default function EnhancedContact() {
                       {...register('email')}
                       type="email"
                       id="email"
+                      aria-label="Email Address"
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 ${
                         errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
                       }`}
@@ -208,9 +225,11 @@ export default function EnhancedContact() {
                     />
                     {errors.email && (
                       <motion.p
+                        id="email-error"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-red-500 text-sm mt-1"
+                        role="alert"
                       >
                         {errors.email.message}
                       </motion.p>
@@ -258,7 +277,7 @@ export default function EnhancedContact() {
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700">
                       Message *
                     </label>
-                    <span className={`text-sm ${messageLength < 10 ? 'text-red-500' : 'text-green-500'}`}>
+                    <span id="message-length" className={`text-sm ${messageLength < 10 ? 'text-red-500' : 'text-green-500'}`}>
                       {messageLength}/500
                     </span>
                   </div>
@@ -267,6 +286,8 @@ export default function EnhancedContact() {
                     id="message"
                     maxLength={500}
                     rows={6}
+                    aria-label="Message"
+                    aria-describedby={errors.message ? "message-error" : "message-length"}
                     className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-white text-gray-900 ${
                       errors.message ? 'border-red-300 bg-red-50' : 'border-gray-300'
                     }`}
@@ -274,9 +295,11 @@ export default function EnhancedContact() {
                   />
                   {errors.message && (
                     <motion.p
+                      id="message-error"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="text-red-500 text-sm mt-1"
+                      role="alert"
                     >
                       {errors.message.message}
                     </motion.p>

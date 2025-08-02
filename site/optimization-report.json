@@ -1,0 +1,401 @@
+{
+  "analysis": [
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/admin/page.js",
+      "lines": 866,
+      "size": 36062,
+      "imports": 11,
+      "exports": 1,
+      "functions": 10,
+      "issues": [
+        "File is too large (866 lines)"
+      ]
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/analytics/route.js",
+      "lines": 82,
+      "size": 2276,
+      "imports": 3,
+      "exports": 2,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/contact/route.js",
+      "lines": 84,
+      "size": 2295,
+      "imports": 5,
+      "exports": 2,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/contacts/route.js",
+      "lines": 89,
+      "size": 2500,
+      "imports": 3,
+      "exports": 2,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/email/test/route.js",
+      "lines": 40,
+      "size": 1139,
+      "imports": 3,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/health/route.js",
+      "lines": 56,
+      "size": 1650,
+      "imports": 3,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/api/save-content/route.js",
+      "lines": 88,
+      "size": 2744,
+      "imports": 3,
+      "exports": 3,
+      "functions": 3,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/debug/page.js",
+      "lines": 99,
+      "size": 3066,
+      "imports": 1,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/global-error.js",
+      "lines": 34,
+      "size": 1253,
+      "imports": 0,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/layout.js",
+      "lines": 33,
+      "size": 802,
+      "imports": 3,
+      "exports": 2,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/page.js",
+      "lines": 29,
+      "size": 793,
+      "imports": 9,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/test-api/page.js",
+      "lines": 70,
+      "size": 2028,
+      "imports": 1,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/About.js",
+      "lines": 236,
+      "size": 9233,
+      "imports": 2,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Achievements.js",
+      "lines": 91,
+      "size": 3681,
+      "imports": 3,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Certificates.js",
+      "lines": 90,
+      "size": 3592,
+      "imports": 4,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Contact.js",
+      "lines": 448,
+      "size": 19060,
+      "imports": 7,
+      "exports": 1,
+      "functions": 3,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/EnhancedHomepage.js",
+      "lines": 437,
+      "size": 17492,
+      "imports": 3,
+      "exports": 1,
+      "functions": 3,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/EnhancedSkills.js",
+      "lines": 155,
+      "size": 6131,
+      "imports": 3,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/EnhancedWorkShowcase.js",
+      "lines": 486,
+      "size": 19740,
+      "imports": 4,
+      "exports": 1,
+      "functions": 5,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/ErrorBoundary.js",
+      "lines": 65,
+      "size": 2162,
+      "imports": 1,
+      "exports": 1,
+      "functions": 0,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Footer.js",
+      "lines": 148,
+      "size": 5434,
+      "imports": 4,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Homepage.js",
+      "lines": 358,
+      "size": 16361,
+      "imports": 3,
+      "exports": 1,
+      "functions": 7,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/LinkedInQR.js",
+      "lines": 107,
+      "size": 3779,
+      "imports": 4,
+      "exports": 1,
+      "functions": 3,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Navigation.js",
+      "lines": 346,
+      "size": 15254,
+      "imports": 3,
+      "exports": 1,
+      "functions": 3,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Portfolio.js",
+      "lines": 60,
+      "size": 4085,
+      "imports": 2,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/Skills.js",
+      "lines": 42,
+      "size": 2389,
+      "imports": 1,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/WorkShowcase.js",
+      "lines": 246,
+      "size": 8395,
+      "imports": 2,
+      "exports": 1,
+      "functions": 4,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/admin/AdminControls.js",
+      "lines": 58,
+      "size": 2091,
+      "imports": 1,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/admin/AdminDashboard.js",
+      "lines": 100,
+      "size": 3763,
+      "imports": 1,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/admin/AdminLogin.js",
+      "lines": 67,
+      "size": 2615,
+      "imports": 2,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/admin/AdminTabs.js",
+      "lines": 46,
+      "size": 1400,
+      "imports": 1,
+      "exports": 1,
+      "functions": 2,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/ui/FormFields.js",
+      "lines": 122,
+      "size": 3314,
+      "imports": 1,
+      "exports": 4,
+      "functions": 4,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/components/ui/LoadingSpinner.js",
+      "lines": 23,
+      "size": 544,
+      "imports": 1,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/hooks/useAdminAuth.js",
+      "lines": 44,
+      "size": 1201,
+      "imports": 2,
+      "exports": 1,
+      "functions": 4,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/hooks/useSiteContent.js",
+      "lines": 75,
+      "size": 1970,
+      "imports": 2,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/hooks/useTypewriter.js",
+      "lines": 34,
+      "size": 1478,
+      "imports": 2,
+      "exports": 1,
+      "functions": 1,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/lib/constants.js",
+      "lines": 126,
+      "size": 3219,
+      "imports": 0,
+      "exports": 10,
+      "functions": 0,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/lib/database.js",
+      "lines": 251,
+      "size": 6464,
+      "imports": 2,
+      "exports": 1,
+      "functions": 0,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/lib/email.js",
+      "lines": 245,
+      "size": 7904,
+      "imports": 1,
+      "exports": 2,
+      "functions": 0,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/lib/middleware.js",
+      "lines": 203,
+      "size": 5890,
+      "imports": 1,
+      "exports": 8,
+      "functions": 6,
+      "issues": []
+    },
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/lib/validation.js",
+      "lines": 119,
+      "size": 4809,
+      "imports": 1,
+      "exports": 5,
+      "functions": 1,
+      "issues": []
+    }
+  ],
+  "issues": [
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/admin/page.js",
+      "lines": 866,
+      "size": 36062,
+      "imports": 11,
+      "exports": 1,
+      "functions": 10,
+      "issues": [
+        "File is too large (866 lines)"
+      ]
+    }
+  ],
+  "largeFiles": [
+    {
+      "path": "/Users/shubhamkumar/Desktop/vivek/vk/my_website_for_linkedin/site/src/app/admin/page.js",
+      "lines": 866,
+      "size": 36062,
+      "imports": 11,
+      "exports": 1,
+      "functions": 10,
+      "issues": [
+        "File is too large (866 lines)"
+      ]
+    }
+  ]
+}

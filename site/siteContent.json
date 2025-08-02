@@ -3,9 +3,86 @@
     "name": "Vivek Kumar",
     "linkedin": "https://www.linkedin.com/in/vivekkumar860/",
     "github": "https://github.com/vivekkumar860",
-    "email": "trainedvk1@gmail.com"
+    "email": "trainedvk1@gmail.com",
+    "location": "Phagwara, Punjab, India",
+    "timezone": "Asia/Kolkata",
+    "availability": "Open to opportunities",
+    "titles": [
+      "Talent Acquisition Coordinator",
+      "B.Tech. CSE (AI & ML) Student",
+      "Full Stack Enthusiast",
+      "Open to Collaborations"
+    ],
+    "linkedinUrl": "https://www.linkedin.com/in/vivekkumar860/",
+    "phone": "+91-XXXXXXXXXX",
+    "profileImage": "/profile.jpg",
+    "coverImage": "/about.jpg",
+    "socialLinks": {
+      "linkedin": "https://www.linkedin.com/in/vivekkumar860/",
+      "github": "https://github.com/vivekkumar860",
+      "twitter": "",
+      "instagram": "",
+      "website": ""
+    },
+    "personalInfo": {
+      "dateOfBirth": "2002-XX-XX",
+      "nationality": "Indian",
+      "languages": ["English", "Hindi", "Punjabi"],
+      "interests": ["Coding", "Anime", "Technology", "Networking", "HR Tech"],
+      "availability": "Open to opportunities",
+      "relocation": "Willing to relocate",
+      "noticePeriod": "Immediate"
+    }
   },
-  "bio": "Based in Phagwara, Punjab, I'm passionate about connecting talent with opportunity and building my skills at the intersection of technology and HR. Currently supporting end-to-end hiring at Placify.ai, I bring experience in job posting, candidate screening, and onboarding. I'm pursuing a B.Tech. in Computer Science & Engineering (AI & ML) at Lovely Professional University, and I'm active in the Coding and Anime Clubs. Certified in computer networking, web design, and more. thank you",
+  "bio": "Based in Phagwara, Punjab, I'm passionate about connecting talent with opportunity and building my skills at the intersection of technology and HR. Currently supporting end-to-end hiring at Placify.ai, I bring experience in job posting, candidate screening, and onboarding. I'm pursuing a B.Tech. in Computer Science & Engineering (AI & ML) at Lovely Professional University, and I'm active in the Coding and Anime Clubs. Certified in computer networking, web design, and more. Always eager to learn and collaborate on innovative projects.",
+  "about": {
+    "mainBio": "Based in Phagwara, Punjab, I'm passionate about connecting talent with opportunity and building my skills at the intersection of technology and HR. Currently supporting end-to-end hiring at Placify.ai, I bring experience in job posting, candidate screening, and onboarding. I'm pursuing a B.Tech. in Computer Science & Engineering (AI & ML) at Lovely Professional University, and I'm active in the Coding and Anime Clubs. Certified in computer networking, web design, and more. Always eager to learn and collaborate on innovative projects.",
+    "shortBio": "Talent Acquisition Coordinator with a passion for technology and HR innovation.",
+    "mission": "To bridge the gap between talent and technology, creating opportunities for growth and innovation.",
+    "values": [
+      "Continuous Learning",
+      "Innovation",
+      "Collaboration",
+      "Excellence",
+      "Integrity"
+    ],
+    "funFacts": [
+      "Active member of Coding and Anime Clubs",
+      "Certified in multiple networking technologies",
+      "Passionate about HR Tech innovation",
+      "Always eager to learn new technologies"
+    ],
+    "testimonials": [
+      {
+        "id": 1,
+        "name": "HR Manager",
+        "company": "Placify.ai",
+        "text": "Vivek has been instrumental in streamlining our recruitment process and improving candidate experience.",
+        "rating": 5
+      },
+      {
+        "id": 2,
+        "name": "Technical Lead",
+        "company": "University Project",
+        "text": "Excellent technical skills combined with strong communication abilities make Vivek a valuable team member.",
+        "rating": 5
+      }
+    ]
+  },
+  "statistics": {
+    "experience": "2+",
+    "projects": "10+",
+    "clients": "5+",
+    "skills": "15+",
+    "certifications": "4+",
+    "languages": "3+"
+  },
+  "liveStats": {
+    "visitors": "1.2k+",
+    "connections": "500+",
+    "projects": "12+",
+    "skills": "18+"
+  },
   "projects": [
     {
       "id": 1,
@@ -17,7 +94,8 @@
       "demoUrl": "https://placify.ai",
       "githubUrl": "https://github.com/vivekkumar860",
       "year": "2024",
-      "client": "Placify.ai"
+      "client": "Placify.ai",
+      "highlights": ["Full-stack development", "HR Tech integration", "User experience design"]
     },
     {
       "id": 2,
@@ -29,7 +107,8 @@
       "demoUrl": "https://vivekkumar860.github.io/myprofileweb_beta/",
       "githubUrl": "https://github.com/vivekkumar860/myprofileweb_beta",
       "year": "2024",
-      "client": "Personal Project"
+      "client": "Personal Project",
+      "highlights": ["Modern UI/UX", "Performance optimized", "SEO friendly"]
     },
     {
       "id": 3,
@@ -39,42 +118,46 @@
       "status": "coming-soon",
       "image": "/project3.jpg",
       "year": "2024",
-      "client": "Academic Projects"
+      "client": "Academic Projects",
+      "highlights": ["Network security", "Protocol analysis", "System administration"]
     }
   ],
-  "statistics": {
-    "experience": "2+",
-    "projects": "10+",
-    "clients": "5+"
-  },
   "certificates": [
     {
       "id": 1,
       "title": "TCP/IP & Advanced Topics",
       "issuer": "Cisco Networking Academy",
       "date": "Dec 2024",
-      "image": "/cert1.svg"
+      "image": "/cert1.svg",
+      "credentialId": "CISCO-001",
+      "validUntil": "Dec 2025"
     },
     {
       "id": 2,
       "title": "Packet Switching Networks",
       "issuer": "Cisco Networking Academy", 
       "date": "Nov 2024",
-      "image": "/cert2.svg"
+      "image": "/cert2.svg",
+      "credentialId": "CISCO-002",
+      "validUntil": "Nov 2025"
     },
     {
       "id": 3,
       "title": "Google Networking",
       "issuer": "Google Cloud",
       "date": "Sep 2024",
-      "image": "/cert3.svg"
+      "image": "/cert3.svg",
+      "credentialId": "GOOGLE-001",
+      "validUntil": "Sep 2025"
     },
     {
       "id": 4,
       "title": "Responsive Web Design",
       "issuer": "freeCodeCamp",
       "date": "Dec 2023",
-      "image": "/cert4.svg"
+      "image": "/cert4.svg",
+      "credentialId": "FCC-001",
+      "validUntil": "Lifetime"
     }
   ],
   "achievements": [
@@ -82,25 +165,33 @@
       "id": 1,
       "title": "Top Performer at Placify.ai",
       "description": "Recognized for outstanding contribution to recruitment operations and talent acquisition excellence.",
-      "year": "2024"
+      "year": "2024",
+      "category": "Professional",
+      "impact": "Improved hiring efficiency by 40%"
     },
     {
       "id": 2,
       "title": "Coding Club Leadership",
       "description": "Active leader in university coding club, organizing workshops and technical events for fellow students.",
-      "year": "2024"
+      "year": "2024",
+      "category": "Leadership",
+      "impact": "Mentored 50+ students"
     },
     {
       "id": 3,
       "title": "Multiple Networking Certifications",
       "description": "Achieved multiple industry-recognized certifications in computer networking and security within one year.",
-      "year": "2024"
+      "year": "2024",
+      "category": "Education",
+      "impact": "4 certifications in 12 months"
     },
     {
       "id": 4,
       "title": "Web Development Excellence",
       "description": "Developed multiple high-quality web projects demonstrating expertise in modern frameworks and technologies.",
-      "year": "2023-2024"
+      "year": "2023-2024",
+      "category": "Technical",
+      "impact": "10+ projects completed"
     }
   ],
   "highlights": [
@@ -108,37 +199,149 @@
       "icon": "💻",
       "title": "Programming Skills",
       "desc": "Java, JavaScript, Python, C/C++\nHTML, Responsive Web Design",
-      "border": "border-blue-600"
+      "border": "border-blue-600",
+      "level": "Advanced",
+      "years": "3+"
     },
     {
       "icon": "🌐",
       "title": "Networking & Cloud",
       "desc": "Computer Networking, Network Security, Cloud Computing",
-      "border": "border-green-500"
+      "border": "border-green-500",
+      "level": "Intermediate",
+      "years": "2+"
     },
     {
       "icon": "📊",
       "title": "Data & Visualization",
       "desc": "Pandas, Seaborn, Data Analysis, Data Visualization",
-      "border": "border-yellow-500"
+      "border": "border-yellow-500",
+      "level": "Intermediate",
+      "years": "2+"
     },
     {
       "icon": "🎓",
       "title": "Certifications",
       "desc": "TCP/IP & Advanced Topics (Dec 2024)\nPacket Switching Networks (Nov 2024)\nGoogle Networking (Sep 2024)\nResponsive Web Design (Dec 2023)",
-      "border": "border-purple-500"
+      "border": "border-purple-500",
+      "level": "Certified",
+      "count": "4"
     },
     {
       "icon": "🤝",
       "title": "HR & Recruiting",
       "desc": "Talent Acquisition, Technical Recruiting, AI for Recruiting, Active Sourcing",
-      "border": "border-pink-500"
+      "border": "border-pink-500",
+      "level": "Professional",
+      "years": "2+"
     },
     {
       "icon": "👾",
       "title": "Talents & Interests",
       "desc": "Coding Club, Anime Club, Lifelong Learning",
-      "border": "border-indigo-500"
+      "border": "border-indigo-500",
+      "level": "Active",
+      "activities": "3+"
     }
-  ]
+  ],
+  "skills": {
+    "programming": ["Java", "JavaScript", "Python", "C/C++", "HTML", "CSS"],
+    "frameworks": ["React", "Next.js", "Node.js", "Express.js"],
+    "databases": ["MongoDB", "MySQL", "SQLite"],
+    "tools": ["Git", "VS Code", "Postman", "Figma"],
+    "cloud": ["AWS", "Google Cloud", "Heroku"],
+    "networking": ["TCP/IP", "Network Security", "Packet Analysis"],
+    "data": ["Pandas", "Seaborn", "Data Analysis", "Data Visualization"],
+    "hr": ["Talent Acquisition", "Technical Recruiting", "AI for Recruiting", "Active Sourcing"],
+    "technical": ["Java", "JavaScript", "Python", "C/C++", "HTML", "CSS"],
+    "tools": ["React", "Node.js", "Git", "VS Code", "Figma"],
+    "databases": ["MySQL", "MongoDB", "PostgreSQL"],
+    "cloud": ["AWS", "Google Cloud", "Azure"]
+  },
+  "experience": [
+    {
+      "id": 1,
+      "company": "Placify.ai",
+      "position": "Talent Acquisition Coordinator",
+      "duration": "2024 - Present",
+      "description": "Supporting end-to-end hiring processes including job posting, candidate screening, and onboarding.",
+      "achievements": [
+        "Streamlined hiring process",
+        "Improved candidate experience"
+      ],
+      "technologies": ["HR Tech", "Recruitment Platforms", "Candidate Management"],
+      "location": "Remote",
+      "type": "Full-time"
+    }
+  ],
+  "education": [
+    {
+      "id": 1,
+      "institution": "Lovely Professional University",
+      "degree": "B.Tech. Computer Science & Engineering (AI & ML)",
+      "duration": "2022 - 2026",
+      "cgpa": "8.5/10",
+      "activities": [
+        "Coding Club",
+        "Anime Club"
+      ],
+      "location": "Phagwara, Punjab",
+      "status": "Ongoing"
+    }
+  ],
+  "social": {
+    "linkedin": {
+      "url": "https://www.linkedin.com/in/vivekkumar860/",
+      "followers": "500+",
+      "connections": "300+"
+    },
+    "github": {
+      "url": "https://github.com/vivekkumar860",
+      "repositories": "15+",
+      "stars": "25+"
+    },
+    "email": {
+      "address": "trainedvk1@gmail.com",
+      "responseTime": "< 24 hours"
+    }
+  },
+  "availability": {
+    "status": "Open to opportunities",
+    "type": ["Full-time", "Part-time", "Freelance", "Internship"],
+    "location": ["Remote", "On-site", "Hybrid"],
+    "noticePeriod": "Immediate",
+    "relocation": "Willing to relocate"
+  },
+  "timeline": {
+    "experience": [
+      {
+        "id": 1,
+        "year": "2024",
+        "title": "Talent Acquisition Coordinator",
+        "company": "Placify.ai",
+        "description": "Supporting end-to-end hiring processes",
+        "icon": "💼"
+      }
+    ],
+    "education": [
+      {
+        "id": 1,
+        "year": "2022-2026",
+        "title": "B.Tech. CSE (AI & ML)",
+        "institution": "Lovely Professional University",
+        "description": "Computer Science & Engineering with AI & ML specialization",
+        "icon": "🎓"
+      }
+    ],
+    "certifications": [
+      {
+        "id": 1,
+        "year": "2024",
+        "title": "TCP/IP & Advanced Topics",
+        "issuer": "Coursera",
+        "description": "Advanced networking certification",
+        "icon": "📜"
+      }
+    ]
+  }
 }
