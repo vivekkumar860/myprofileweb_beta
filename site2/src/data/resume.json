@@ -1,0 +1,88 @@
+{
+  "workExperience": [
+    {
+      "id": "1",
+      "jobTitle": "Senior Frontend Developer",
+      "company": "TechCorp Solutions",
+      "duration": "2022 - Present",
+      "location": "San Francisco, CA",
+      "description": "Lead frontend development for enterprise web applications using React, TypeScript, and Next.js. Mentored junior developers and implemented best practices for code quality and performance optimization."
+    },
+    {
+      "id": "2",
+      "jobTitle": "Full Stack Developer",
+      "company": "StartupHub Inc",
+      "duration": "2020 - 2022",
+      "location": "New York, NY",
+      "description": "Developed and maintained full-stack web applications using React, Node.js, and PostgreSQL. Collaborated with design and product teams to deliver user-centric solutions."
+    },
+    {
+      "id": "3",
+      "jobTitle": "Frontend Developer",
+      "company": "Digital Agency XYZ",
+      "duration": "2018 - 2020",
+      "location": "Austin, TX",
+      "description": "Built responsive websites and web applications for clients across various industries. Worked with modern frameworks and implemented SEO best practices."
+    },
+    {
+      "id": "4",
+      "jobTitle": "Junior Developer",
+      "company": "WebTech Solutions",
+      "duration": "2017 - 2018",
+      "location": "Seattle, WA",
+      "description": "Started career as a junior developer, learning modern web development practices and contributing to client projects under senior developer guidance."
+    }
+  ],
+  "education": [
+    {
+      "id": "1",
+      "degree": "Master of Science in Computer Science",
+      "institution": "Stanford University",
+      "duration": "2015 - 2017",
+      "location": "Stanford, CA",
+      "description": "Specialized in Software Engineering and Web Technologies"
+    },
+    {
+      "id": "2",
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "University of California, Berkeley",
+      "duration": "2011 - 2015",
+      "location": "Berkeley, CA",
+      "description": "Major in Computer Science with minor in Mathematics"
+    }
+  ],
+  "skills": {
+    "Frontend": [
+      { "name": "React", "level": "Expert" },
+      { "name": "TypeScript", "level": "Expert" },
+      { "name": "Next.js", "level": "Expert" },
+      { "name": "Vue.js", "level": "Intermediate" },
+      { "name": "HTML/CSS", "level": "Expert" },
+      { "name": "Tailwind CSS", "level": "Expert" },
+      { "name": "JavaScript", "level": "Expert" }
+    ],
+    "Backend": [
+      { "name": "Node.js", "level": "Expert" },
+      { "name": "Express.js", "level": "Expert" },
+      { "name": "Python", "level": "Intermediate" },
+      { "name": "PostgreSQL", "level": "Intermediate" },
+      { "name": "MongoDB", "level": "Intermediate" },
+      { "name": "GraphQL", "level": "Intermediate" }
+    ],
+    "Tools & DevOps": [
+      { "name": "Git", "level": "Expert" },
+      { "name": "Docker", "level": "Intermediate" },
+      { "name": "AWS", "level": "Intermediate" },
+      { "name": "Vercel", "level": "Expert" },
+      { "name": "Figma", "level": "Intermediate" },
+      { "name": "Jest", "level": "Expert" }
+    ],
+    "Other": [
+      { "name": "Agile/Scrum", "level": "Expert" },
+      { "name": "REST APIs", "level": "Expert" },
+      { "name": "SEO", "level": "Intermediate" },
+      { "name": "Performance Optimization", "level": "Expert" },
+      { "name": "UI/UX Design", "level": "Intermediate" }
+    ]
+  }
+} 
